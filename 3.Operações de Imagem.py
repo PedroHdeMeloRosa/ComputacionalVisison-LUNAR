@@ -16,7 +16,8 @@ img[55, 55] = [255, 255, 255]                                  # Altera o pixel 
 img[100:150, 100:150] = [255, 0, 255]                        # Define um bloco de 50x50 pixels como branco ou  qualquer outra cor (de linha 100 a 149, coluna 100 a 149)
 
 watch_face = img[37:111, 107:194]                              # Recorta a "face do relógio" (região de 74x87 pixels)
-img[0:74, 0:87] = watch_face                                   # Cola essa região no canto superior esquerdo da imagem
+img[0:74, 0:87] = watch_face                                   # Cola essa região no canto superior esquerdo da imagem, as proporções desta figura devem se exatamente o
+                                                                #o resultado da subtração das cordenadas do fim menos a do inicio.
 
 cv2.imshow('image', img)                                      # Exibe a imagem resultante
 cv2.waitKey(0)                                                # Espera até que uma tecla seja pressionada
