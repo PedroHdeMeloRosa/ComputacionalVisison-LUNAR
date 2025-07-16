@@ -98,6 +98,18 @@ def desenhar_roi(imagem, vertices):
     cv2.polylines(imagem, [vertices], isClosed=True, color=(0, 255, 0), thickness=2)
     return imagem
 
+# --------------------------------------------------------------------------------#
+# Função 7: LINHAS BRUTAS
+# --------------------------------------------------------------------------------#
+def linhas_brutas(image, linhas):
+    line_image = np.zeros_like(image)
+
+    if linhas is not None:
+        for linha in linhas:
+            x1,y1,x2,y2 = linha.reshape(4)
+            cv2.line(line_image, (x1,y1) , (x2,y2), (255,0,0), 10)
+    return line_image
+
 
 # ================================================================================#
 # SCRIPT PRINCIPAL (LOOP DE VÍDEO EM TEMPO REAL)
@@ -131,6 +143,9 @@ while (cap.isOpened()):
         # 4. Calcular média das linhas
         linhas_otimizadas = calcular_media_linhas(frame, linhas_detectadas)
 
+        #Função extra:
+        imagem_com_linha_bruta = linhas_brutas(frame, linhas_detectadas)
+
         # 5. Desenhar linhas
         imagem_com_linhas = desenhar_linhas(frame, linhas_otimizadas)
 
@@ -144,8 +159,8 @@ while (cap.isOpened()):
 
         # Exibe o resultado final, agora com a ROI desenhada
         cv2.imshow("Detector de Faixas", imagem_final_com_roi)
-        cv2.imshow("Detector de Faixas2", )
-        #cv2.imshow("Detector de Faixa3", imagem_canny)
+        cv2.imshow("Detector de Faixas2",imagem_com_linha_bruta )
+        cv2.imshow("Detector de Faixa3", imagem_roi)
 
     except (ValueError, TypeError, np.linalg.LinAlgError) as e:
         # Se ocorrer um erro (ex: nenhuma linha detectada), apenas exibe o frame original
